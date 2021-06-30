@@ -1,0 +1,24 @@
+#!/usr/bin/env sh
+
+set -eu
+
+# Add git submodules
+git submodule update --init --recursive
+
+[ -f .env ] || cp --verbose .env.sample .env
+. .env
+
+# Install docker
+wget -qO - https://git.io/JJaKZ?=docker-ubuntu | bash
+
+# Install brew
+wget -qO - https://git.io/JTlbH?=brew-ubuntu | bash
+
+brew install pre-commit
+brew install shfmt
+brew install shellcheck
+brew install hadolint
+brew install bats
+
+sudo apt-get update -y
+sudo apt-get install -y make
