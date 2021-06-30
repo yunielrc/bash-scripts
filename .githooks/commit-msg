@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+set -eu
+
+# pre-commit run --hook-stage commit-msg --commit-msg-filename COMMIT_MSG_FILENAME
