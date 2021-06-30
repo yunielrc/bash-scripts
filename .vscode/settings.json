@@ -1,0 +1,13 @@
+{
+  "shellcheck.exclude": [
+    "1091",
+    "1090",
+    "2155"
+  ],
+  "files.associations": {
+    ".env*": "shellscript",
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+}
