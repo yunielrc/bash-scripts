@@ -14,7 +14,7 @@ set -euEo pipefail
 if [[ -f /etc/reconnect-nauta.env ]]; then
   . /etc/reconnect-nauta.env
 fi
-readonly SCRIPT_NAME="$(basename "${0}")"
+
 readonly SWEET_NAUTA_URL="http://${SWEET_NAUTA_HOST}:${SWEET_NAUTA_PORT}"
 readonly CLIENT_ID='localclient'
 
@@ -32,7 +32,6 @@ if [[ "$(curl --silent --show-error "${SWEET_NAUTA_URL}/isconnected")" == true ]
     readonly disconnect_code="$(echo "$disconnect_res" | jq -r '.code')"
     readonly disconnect_message="$(echo "$disconnect_res" | jq -r '.message')"
 
-    notify-send "Sweet Nauta Server - ${SCRIPT_NAME}" "$disconnect_message"
     echo "${disconnect_code}  ${disconnect_message}"
 
     if [[ "$disconnect_code" != DISCONNECT_SUCCESS ]]; then
@@ -43,7 +42,6 @@ if [[ "$(curl --silent --show-error "${SWEET_NAUTA_URL}/isconnected")" == true ]
     readonly connect_code="$(echo "$connect_res" | jq -r '.code')"
     readonly connect_message="$(echo "$connect_res" | jq -r '.message')"
 
-    notify-send "Sweet Nauta Server - ${SCRIPT_NAME}" "$connect_message"
     echo "${connect_code}  ${connect_message}"
 
     if [[ "$connect_code" != CONNECT_SUCCESS ]]; then

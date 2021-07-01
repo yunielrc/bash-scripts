@@ -80,7 +80,6 @@ reconnect-nauta() {
   assert_failure
   assert_output "There is an opened nauta session, but ${INTRANET_HOST} isn't reachable
 Reconnecting nauta session
-
 DISCONNECT_FAIL  disconnect fail"
 }
 
@@ -124,9 +123,7 @@ DISCONNECT_FAIL  disconnect fail"
   assert_failure
   assert_output "There is an opened nauta session, but ${INTRANET_HOST} isn't reachable
 Reconnecting nauta session
-
 DISCONNECT_SUCCESS  disconnect success
-
 CONNECT_FAIL  connect fail"
 }
 
@@ -170,8 +167,6 @@ CONNECT_FAIL  connect fail"
   assert_success
   assert_output "There is an opened nauta session, but ${INTRANET_HOST} isn't reachable
 Reconnecting nauta session
-
 DISCONNECT_SUCCESS  disconnect success
-
 CONNECT_SUCCESS  connect success"
 }
