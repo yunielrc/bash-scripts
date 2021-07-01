@@ -26,4 +26,4 @@ cat <<EOF >>"$tmpcron"
 *       *       *       *       *       sleep 50; /usr/local/bin/reconnect-nauta 2>&1 | /usr/bin/logger -t reconnect-nauta
 EOF
 crontab "$tmpcron"
-[ ! -f "$tmpcron" ] || rm "$tmpcron"
+rm "$tmpcron"
