@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -eu
+
+targets=()
+while IFS= read -r; do
+  targets+=("$REPLY")
+done < <(
+  find . \
+    ! -path '*.git/*' \
+    -type f \
+    -exec file {} \; |
+    grep -E '\ssh(ell)?\sscript' |
+    sed 's/:.*$//'
+  find . \
+    -type f \
+    -iregex '.*\.\(sh\|bash\)$'
+)
+
+LC_ALL=C.UTF-8 shellcheck "${targets[@]}"
