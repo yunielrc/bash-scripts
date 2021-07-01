@@ -33,5 +33,5 @@ repos:
       - id: test
         name: test
         language: system
-        entry: bats
-        files: \.bats$
+        pass_filenames: false
+        entry: make test
