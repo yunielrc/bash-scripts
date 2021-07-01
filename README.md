@@ -10,7 +10,7 @@ Clone this repository
 git clone https://github.com/yunielrc/bash-scripts.git
 ```
 
-For install a `PACKAGE-X`
+To install a `PACKAGE-X`
 
 ```sh
 cd src/packages/`PACKAGE-X`

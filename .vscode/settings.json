@@ -10,4 +10,5 @@
   "[shellscript]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
+  "DockerRun.DisableAutoGenerateConfig": true,
 }
