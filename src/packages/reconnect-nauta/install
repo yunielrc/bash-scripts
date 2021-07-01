@@ -12,8 +12,10 @@ sudo install -v -m 664 reconnect-nauta.env /etc
 readonly tmpcron="$(mktemp)"
 set -x
 crontab -l >"$tmpcron" || :
+set +x
 
 if [ -f "$tmpcron" ] && grep -q 'reconnect-nauta' "$tmpcron"; then
+  echo "> reconnect-nauta is already installed in your crontab"
   exit
 fi
 
@@ -27,4 +29,6 @@ cat <<EOF >>"$tmpcron"
 *       *       *       *       *       sleep 50; /usr/local/bin/reconnect-nauta 2>&1 | /usr/bin/logger -t reconnect-nauta
 EOF
 crontab "$tmpcron"
+echo "> reconnect-nauta bot was installed in your crontab"
+
 rm "$tmpcron"
