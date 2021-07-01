@@ -14,12 +14,12 @@ set -euEo pipefail
 if [[ -f /etc/reconnect-nauta.env ]]; then
   . /etc/reconnect-nauta.env
 fi
-
-readonly sweet_nauta_url="http://${SWEET_NAUTA_HOST}:${SWEET_NAUTA_PORT}"
-readonly client_id='localclient'
+readonly SCRIPT_NAME="$(basename "${0}")"
+readonly SWEET_NAUTA_URL="http://${SWEET_NAUTA_HOST}:${SWEET_NAUTA_PORT}"
+readonly CLIENT_ID='localclient'
 
 # If there is an opened nauta session
-if [[ "$(curl --silent --show-error "${sweet_nauta_url}/isconnected")" == true ]]; then
+if [[ "$(curl --silent --show-error "${SWEET_NAUTA_URL}/isconnected")" == true ]]; then
   if ! ping -c 1 -W 5 "$NAUTA_LOGIN_HOST" >/dev/null 2>&1; then
     echo "There is an opened nauta session, but ${NAUTA_LOGIN_HOST} isn't reachable"
     exit 1
@@ -28,22 +28,22 @@ if [[ "$(curl --silent --show-error "${sweet_nauta_url}/isconnected")" == true ]
     echo "There is an opened nauta session, but ${INTRANET_HOST} isn't reachable"
     echo "Reconnecting nauta session"
 
-    readonly disconnect_res="$(curl --silent --show-error "${sweet_nauta_url}/disconnect/${client_id}" 2>&1)"
+    readonly disconnect_res="$(curl --silent --show-error "${SWEET_NAUTA_URL}/disconnect/${CLIENT_ID}" 2>&1)"
     readonly disconnect_code="$(echo "$disconnect_res" | jq -r '.code')"
     readonly disconnect_message="$(echo "$disconnect_res" | jq -r '.message')"
 
-    notify-send 'Sweet Nauta Server - Login Test' "$disconnect_message"
+    notify-send "Sweet Nauta Server - ${SCRIPT_NAME}" "$disconnect_message"
     echo "${disconnect_code}  ${disconnect_message}"
 
     if [[ "$disconnect_code" != DISCONNECT_SUCCESS ]]; then
       exit 1
     fi
 
-    readonly connect_res="$(curl --silent --show-error "${sweet_nauta_url}/connect/${client_id}" 2>&1)"
+    readonly connect_res="$(curl --silent --show-error "${SWEET_NAUTA_URL}/connect/${CLIENT_ID}" 2>&1)"
     readonly connect_code="$(echo "$connect_res" | jq -r '.code')"
     readonly connect_message="$(echo "$connect_res" | jq -r '.message')"
 
-    notify-send 'Sweet Nauta Server - Login Test' "$connect_message"
+    notify-send "Sweet Nauta Server - ${SCRIPT_NAME}" "$connect_message"
     echo "${connect_code}  ${connect_message}"
 
     if [[ "$connect_code" != CONNECT_SUCCESS ]]; then
