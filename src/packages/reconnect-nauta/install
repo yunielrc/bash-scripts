@@ -1,0 +1,29 @@
+#!/usr/bin/env sh
+
+set -eu
+
+sudo apt update -y || :
+sudo apt install -y jq
+
+sudo install -v -m 555 reconnect-nauta /usr/local/bin
+sudo install -v -m 664 reconnect-nauta.env /etc
+
+# adds script to crontab
+readonly tmpcron="$(mktemp)"
+crontab -l >"$tmpcron" || :
+
+if [ -f "$tmpcron" ] && grep -q 'reconnect-nauta' "$tmpcron"; then
+  exit
+fi
+
+cat <<EOF >>"$tmpcron"
+# reconnect-nauta
+*       *       *       *       *       /usr/local/bin/reconnect-nauta 2>&1 | /usr/bin/logger -t reconnect-nauta
+*       *       *       *       *       sleep 10; /usr/local/bin/reconnect-nauta 2>&1 | /usr/bin/logger -t reconnect-nauta
+*       *       *       *       *       sleep 20; /usr/local/bin/reconnect-nauta 2>&1 | /usr/bin/logger -t reconnect-nauta
+*       *       *       *       *       sleep 30; /usr/local/bin/reconnect-nauta 2>&1 | /usr/bin/logger -t reconnect-nauta
+*       *       *       *       *       sleep 40; /usr/local/bin/reconnect-nauta 2>&1 | /usr/bin/logger -t reconnect-nauta
+*       *       *       *       *       sleep 50; /usr/local/bin/reconnect-nauta 2>&1 | /usr/bin/logger -t reconnect-nauta
+EOF
+crontab "$tmpcron"
+[ -f "$tmpcron" ] || rm "$tmpcron"
