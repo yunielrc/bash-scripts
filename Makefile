@@ -6,3 +6,6 @@ lint:
 
 test:
 	bats -r src/
+
+commit:
+	cz commit
