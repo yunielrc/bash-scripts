@@ -5,8 +5,7 @@ set -eu
 # Add git submodules
 git submodule update --init --recursive
 
-[ -f .env ] || cp --verbose .env.sample .env
-. .env
+[ -f .env ] && . .env
 
 # Install docker
 # wget -qO - https://git.io/JJaKZ?=docker-ubuntu | bash
