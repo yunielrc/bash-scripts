@@ -2,7 +2,7 @@
 
 ## About
 
-For some reason etecsa closes the wifi nauta session around every 20-45 minutes.
+For some reason etecsa sometimes closes the wifi nauta session around every 20-45 minutes.
 This bot reconnect the session automatically if it was deliberately closed by etecsa.
 
 ## Getting Started
