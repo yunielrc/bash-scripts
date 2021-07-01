@@ -17,7 +17,7 @@ brew install pre-commit
 brew install shfmt
 brew install shellcheck
 brew install hadolint
-brew install bats
+brew install bats-core
 
 sudo apt-get update -y
 sudo apt-get install -y make
