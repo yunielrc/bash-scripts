@@ -2,7 +2,7 @@ format:
 	shfmt -w .
 
 lint:
-	scripts/lint
+	shfmt -d . && scripts/lint
 
 test:
 	bats -r src/
