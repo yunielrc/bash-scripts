@@ -2,13 +2,7 @@
 
 set -eu
 
-# Add git submodules
-git submodule update --init --recursive
-
 [ -f .env ] && . .env
-
-# Install docker
-# wget -qO - https://git.io/JJaKZ?=docker-ubuntu | bash
 
 # Install brew
 wget -qO - https://git.io/JTlbH?=brew-ubuntu | bash
@@ -19,5 +13,21 @@ brew install shellcheck
 brew install hadolint
 brew install bats-core
 
-sudo apt-get update -y
+sudo apt-get update -y || :
 sudo apt-get install -y make
+
+# Install libs
+[ -d ~/.usr/lib/ ] || mkdir -p ~/.usr/lib/
+
+(
+  cd ~/.usr/lib/
+  git clone https://github.com/bats-core/bats-support
+  git clone https://github.com/bats-core/bats-assert
+  git clone https://github.com/bats-core/bats-file
+
+  cat <<-'EOF' >~/.usr/lib/test_helper.bash
+  . ~/.usr/lib/bats-support/load.bash
+  . ~/.usr/lib/bats-assert/load.bash
+  . ~/.usr/lib/bats-file/load.bash
+EOF
+)
