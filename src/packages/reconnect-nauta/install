@@ -3,7 +3,7 @@
 set -eu
 
 sudo apt update -y || :
-sudo apt install -y jq
+sudo apt install -y jq curl
 
 sudo install -v -m 555 reconnect-nauta /usr/local/bin
 sudo install -v -m 664 reconnect-nauta.env /etc
