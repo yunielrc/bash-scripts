@@ -10,6 +10,7 @@ sudo install -v -m 664 reconnect-nauta.env /etc
 
 # adds script to crontab
 readonly tmpcron="$(mktemp)"
+set -x
 crontab -l >"$tmpcron" || :
 
 if [ -f "$tmpcron" ] && grep -q 'reconnect-nauta' "$tmpcron"; then
