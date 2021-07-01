@@ -29,5 +29,7 @@ sudo apt-get install -y make
   . ~/.usr/lib/bats-support/load.bash
   . ~/.usr/lib/bats-assert/load.bash
   . ~/.usr/lib/bats-file/load.bash
+
+  cd "$BATS_TEST_DIRNAME" || exit
 EOF
 )

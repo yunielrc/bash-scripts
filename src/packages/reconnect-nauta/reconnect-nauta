@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+#
+# Reconnect nauta session
+#
+
+# flock guarantees only one running instance of the script
+if [[ "${FLOCKER:-}" != "$0" ]]; then
+  exec env FLOCKER="$0" flock -xn "$0" "$0" "$@" || :
+fi
+
+set -euEo pipefail
+
+if [[ -f /etc/reconnect-nauta.env ]]; then
+  . /etc/reconnect-nauta.env
+fi
+
+readonly sweet_nauta_url="http://${SWEET_NAUTA_HOST}:${SWEET_NAUTA_PORT}"
+readonly client_id='localclient'
+
+# If there is an opened nauta session
+if [[ "$(curl --silent --show-error "${sweet_nauta_url}/isconnected")" == true ]]; then
+  if ! ping -c 1 -W 5 "$NAUTA_LOGIN_HOST" >/dev/null 2>&1; then
+    echo "There is an opened nauta session, but ${NAUTA_LOGIN_HOST} isn't reachable"
+    exit 1
+  fi
+  if ! ping -c 1 -W 15 "$INTRANET_HOST" >/dev/null 2>&1; then
+    echo "There is an opened nauta session, but ${INTRANET_HOST} isn't reachable"
+    echo "Reconnecting nauta session"
+
+    readonly disconnect_res="$(curl --silent --show-error "${sweet_nauta_url}/disconnect/${client_id}" 2>&1)"
+    readonly disconnect_code="$(echo "$disconnect_res" | jq -r '.code')"
+    readonly disconnect_message="$(echo "$disconnect_res" | jq -r '.message')"
+
+    notify-send 'Sweet Nauta Server - Login Test' "$disconnect_message"
+    echo "${disconnect_code}  ${disconnect_message}"
+
+    if [[ "$disconnect_code" != DISCONNECT_SUCCESS ]]; then
+      exit 1
+    fi
+
+    readonly connect_res="$(curl --silent --show-error "${sweet_nauta_url}/connect/${client_id}" 2>&1)"
+    readonly connect_code="$(echo "$connect_res" | jq -r '.code')"
+    readonly connect_message="$(echo "$connect_res" | jq -r '.message')"
+
+    notify-send 'Sweet Nauta Server - Login Test' "$connect_message"
+    echo "${connect_code}  ${connect_message}"
+
+    if [[ "$connect_code" != CONNECT_SUCCESS ]]; then
+      exit 1
+    fi
+
+  fi
+fi
+
+exit 0
