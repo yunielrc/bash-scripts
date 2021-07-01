@@ -9,7 +9,7 @@ git submodule update --init --recursive
 . .env
 
 # Install docker
-wget -qO - https://git.io/JJaKZ?=docker-ubuntu | bash
+# wget -qO - https://git.io/JJaKZ?=docker-ubuntu | bash
 
 # Install brew
 wget -qO - https://git.io/JTlbH?=brew-ubuntu | bash
