@@ -29,7 +29,7 @@ chmod +x install
 ./install
 ```
 
-Configure reconnect-nauta, modify `SWEET_NAUTA_...` variables if is necessary
+Configure reconnect-nauta, modify `SWEET_NAUTA_...` variables if necessary
 
 ```sh
 sudo vim /etc/reconnect-nauta.env
