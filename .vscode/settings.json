@@ -5,7 +5,7 @@
     "2155"
   ],
   "files.associations": {
-    ".env*": "shellscript",
+    "*.env*": "shellscript",
   },
   "[shellscript]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
