@@ -18,14 +18,14 @@ fi
 readonly SWEET_NAUTA_URL="http://${SWEET_NAUTA_HOST}:${SWEET_NAUTA_PORT}"
 readonly CLIENT_ID='localclient'
 
-# If there is an opened nauta session
+# If there is an open nauta session
 if [[ "$(curl --silent --show-error "${SWEET_NAUTA_URL}/isconnected")" == true ]]; then
   if ! ping -c 1 -W 5 "$NAUTA_LOGIN_HOST" >/dev/null 2>&1; then
-    echo "There is an opened nauta session, but ${NAUTA_LOGIN_HOST} isn't reachable"
+    echo "There is an open nauta session, but ${NAUTA_LOGIN_HOST} isn't reachable"
     exit 1
   fi
   if ! ping -c 1 -W 15 "$INTRANET_HOST" >/dev/null 2>&1; then
-    echo "There is an opened nauta session, but ${INTRANET_HOST} isn't reachable"
+    echo "There is an open nauta session, but ${INTRANET_HOST} isn't reachable"
     echo "Reconnecting nauta session"
 
     readonly disconnect_res="$(curl --silent --show-error "${SWEET_NAUTA_URL}/disconnect/${CLIENT_ID}" 2>&1)"
