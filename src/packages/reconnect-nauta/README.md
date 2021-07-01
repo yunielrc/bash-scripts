@@ -11,7 +11,7 @@ This bot reconnect the session automatically if it was deliberately closed by et
 
 You need to have sweet-nauta-server running in your machine.
 If that is not the case, go to <https://github.com/yunielrc/sweet-nauta-server>
-and intall it.
+and install it.
 
 ### Installing
 
