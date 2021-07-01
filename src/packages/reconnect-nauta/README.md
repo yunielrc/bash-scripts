@@ -37,7 +37,7 @@ sudo vim /etc/reconnect-nauta.env
 
 ## Usage
 
-This bot run in background by cron, you don't need todo anything.
+This bot runs in the background by cron, you don't need to do anything.
 
 To see the logs, run the command below:
 
